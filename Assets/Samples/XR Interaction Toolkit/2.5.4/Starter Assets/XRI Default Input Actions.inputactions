@@ -452,6 +452,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "YButtonTouched",
+                    "type": "Button",
+                    "id": "47275adb-8367-468f-8e31-ec6627322f1e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -694,6 +703,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "XButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72072739-63aa-4e59-aa36-823e8d8cfff2",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "YButtonTouched",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -1268,6 +1288,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "BButtonTouched",
+                    "type": "Button",
+                    "id": "eb9c6eaa-11b8-4c8d-906b-b88eccb31fa4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1510,6 +1539,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "AButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "270ec993-aae9-4a65-995e-3eb1ce196bf7",
+                    "path": "<XRController>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BButtonTouched",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

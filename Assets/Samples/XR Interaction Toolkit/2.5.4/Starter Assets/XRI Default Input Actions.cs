@@ -474,6 +474,15 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""YButtonTouched"",
+                    ""type"": ""Button"",
+                    ""id"": ""47275adb-8367-468f-8e31-ec6627322f1e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -716,6 +725,17 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""XButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72072739-63aa-4e59-aa36-823e8d8cfff2"",
+                    ""path"": ""<XRController>{LeftHand}/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""YButtonTouched"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1290,6 +1310,15 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BButtonTouched"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb9c6eaa-11b8-4c8d-906b-b88eccb31fa4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1532,6 +1561,17 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""AButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""270ec993-aae9-4a65-995e-3eb1ce196bf7"",
+                    ""path"": ""<XRController>{RightHand}/secondaryButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BButtonTouched"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2751,6 +2791,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         m_XRILeftHand_GripPosition = m_XRILeftHand.FindAction("Grip Position", throwIfNotFound: true);
         m_XRILeftHand_GripRotation = m_XRILeftHand.FindAction("Grip Rotation", throwIfNotFound: true);
         m_XRILeftHand_XButton = m_XRILeftHand.FindAction("XButton", throwIfNotFound: true);
+        m_XRILeftHand_YButtonTouched = m_XRILeftHand.FindAction("YButtonTouched", throwIfNotFound: true);
         // XRI LeftHand Interaction
         m_XRILeftHandInteraction = asset.FindActionMap("XRI LeftHand Interaction", throwIfNotFound: true);
         m_XRILeftHandInteraction_Select = m_XRILeftHandInteraction.FindAction("Select", throwIfNotFound: true);
@@ -2790,6 +2831,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         m_XRIRightHand_GripPosition = m_XRIRightHand.FindAction("Grip Position", throwIfNotFound: true);
         m_XRIRightHand_GripRotation = m_XRIRightHand.FindAction("Grip Rotation", throwIfNotFound: true);
         m_XRIRightHand_AButton = m_XRIRightHand.FindAction("AButton", throwIfNotFound: true);
+        m_XRIRightHand_BButtonTouched = m_XRIRightHand.FindAction("BButtonTouched", throwIfNotFound: true);
         // XRI RightHand Interaction
         m_XRIRightHandInteraction = asset.FindActionMap("XRI RightHand Interaction", throwIfNotFound: true);
         m_XRIRightHandInteraction_Select = m_XRIRightHandInteraction.FindAction("Select", throwIfNotFound: true);
@@ -3011,6 +3053,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
     private readonly InputAction m_XRILeftHand_GripPosition;
     private readonly InputAction m_XRILeftHand_GripRotation;
     private readonly InputAction m_XRILeftHand_XButton;
+    private readonly InputAction m_XRILeftHand_YButtonTouched;
     public struct XRILeftHandActions
     {
         private @XRIDefaultInputActions m_Wrapper;
@@ -3029,6 +3072,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         public InputAction @GripPosition => m_Wrapper.m_XRILeftHand_GripPosition;
         public InputAction @GripRotation => m_Wrapper.m_XRILeftHand_GripRotation;
         public InputAction @XButton => m_Wrapper.m_XRILeftHand_XButton;
+        public InputAction @YButtonTouched => m_Wrapper.m_XRILeftHand_YButtonTouched;
         public InputActionMap Get() { return m_Wrapper.m_XRILeftHand; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3080,6 +3124,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @XButton.started += instance.OnXButton;
             @XButton.performed += instance.OnXButton;
             @XButton.canceled += instance.OnXButton;
+            @YButtonTouched.started += instance.OnYButtonTouched;
+            @YButtonTouched.performed += instance.OnYButtonTouched;
+            @YButtonTouched.canceled += instance.OnYButtonTouched;
         }
 
         private void UnregisterCallbacks(IXRILeftHandActions instance)
@@ -3126,6 +3173,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @XButton.started -= instance.OnXButton;
             @XButton.performed -= instance.OnXButton;
             @XButton.canceled -= instance.OnXButton;
+            @YButtonTouched.started -= instance.OnYButtonTouched;
+            @YButtonTouched.performed -= instance.OnYButtonTouched;
+            @YButtonTouched.canceled -= instance.OnYButtonTouched;
         }
 
         public void RemoveCallbacks(IXRILeftHandActions instance)
@@ -3389,6 +3439,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
     private readonly InputAction m_XRIRightHand_GripPosition;
     private readonly InputAction m_XRIRightHand_GripRotation;
     private readonly InputAction m_XRIRightHand_AButton;
+    private readonly InputAction m_XRIRightHand_BButtonTouched;
     public struct XRIRightHandActions
     {
         private @XRIDefaultInputActions m_Wrapper;
@@ -3407,6 +3458,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         public InputAction @GripPosition => m_Wrapper.m_XRIRightHand_GripPosition;
         public InputAction @GripRotation => m_Wrapper.m_XRIRightHand_GripRotation;
         public InputAction @AButton => m_Wrapper.m_XRIRightHand_AButton;
+        public InputAction @BButtonTouched => m_Wrapper.m_XRIRightHand_BButtonTouched;
         public InputActionMap Get() { return m_Wrapper.m_XRIRightHand; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3458,6 +3510,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @AButton.started += instance.OnAButton;
             @AButton.performed += instance.OnAButton;
             @AButton.canceled += instance.OnAButton;
+            @BButtonTouched.started += instance.OnBButtonTouched;
+            @BButtonTouched.performed += instance.OnBButtonTouched;
+            @BButtonTouched.canceled += instance.OnBButtonTouched;
         }
 
         private void UnregisterCallbacks(IXRIRightHandActions instance)
@@ -3504,6 +3559,9 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
             @AButton.started -= instance.OnAButton;
             @AButton.performed -= instance.OnAButton;
             @AButton.canceled -= instance.OnAButton;
+            @BButtonTouched.started -= instance.OnBButtonTouched;
+            @BButtonTouched.performed -= instance.OnBButtonTouched;
+            @BButtonTouched.canceled -= instance.OnBButtonTouched;
         }
 
         public void RemoveCallbacks(IXRIRightHandActions instance)
@@ -4015,6 +4073,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         void OnGripPosition(InputAction.CallbackContext context);
         void OnGripRotation(InputAction.CallbackContext context);
         void OnXButton(InputAction.CallbackContext context);
+        void OnYButtonTouched(InputAction.CallbackContext context);
     }
     public interface IXRILeftHandInteractionActions
     {
@@ -4057,6 +4116,7 @@ public partial class @XRIDefaultInputActions: IInputActionCollection2, IDisposab
         void OnGripPosition(InputAction.CallbackContext context);
         void OnGripRotation(InputAction.CallbackContext context);
         void OnAButton(InputAction.CallbackContext context);
+        void OnBButtonTouched(InputAction.CallbackContext context);
     }
     public interface IXRIRightHandInteractionActions
     {

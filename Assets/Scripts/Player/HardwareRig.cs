@@ -1,11 +1,39 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class HardwareRig : MonoBehaviour
 {
-    private XRIDefaultInputActions _inputActions;
-    [SerializeField] private Transform _playerTransform;
-    public Transform GetTransform() { return _playerTransform; }
+    public Transform GetTransform() { return gameObject.transform; }
+    [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private Transform[] _spawnPoints;
+    //[SerializeField] public PlayerSpawner PlayerSpawner;
+
+    private float tpTime = 1;
+    private bool tp = false;
+
+    public void Teleport(Transform spawnPoint)
+    {
+        _spawnPoint = spawnPoint;
+        tp = true;
+    }
+    public void RespawnTeleport()
+    {
+        Debug.LogError(Random.Range(0, _spawnPoints.Length));
+        _spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
+        Debug.LogError(_spawnPoint.transform.position);
+        gameObject.transform.position = _spawnPoint.position;
+    }
+    public void Update()
+    {
+        if (tp)
+        {
+            tpTime = tpTime - 0.1f;
+            if (tpTime<0)
+            {
+                gameObject.transform.position = _spawnPoint.position;
+                tp = false;
+            } 
+        }
+    }
 
     //private void Awake()
     //{

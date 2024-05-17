@@ -14,18 +14,6 @@ public class WeaponController : NetworkBehaviour
     [SerializeField] private GameObject muzzleFlashPrefab;
     public Ammo Ammo = null;
     public float Damage = 10;
-    //public int Ammo
-    //{
-    //    get { return Ammo; }
-    //    set { Ammo = value; }
-    //}
-
-    public override void Spawned()
-    {
-        //_socketInteractor.hoverEntered.AddListener(Reload());
-        //_simpleInteractor.selectEntered.AddListener((args) => OnSelectEnter(args));
-        //Ammo = 0;
-    }
     public void Shooting()
     {
         if (HasStateAuthority == false || Ammo == null || Ammo.AmmoInMagazine <= 0) { return; }
@@ -38,7 +26,6 @@ public class WeaponController : NetworkBehaviour
                 health.DealDamageRpc(Damage);
             }
         }
-        // Ammo--;
         Ammo.AmmoInMagazine --;
         if (muzzleFlashPrefab)
         {
@@ -59,13 +46,11 @@ public class WeaponController : NetworkBehaviour
     {
         IXRSelectInteractable objectInSocet = _socketInteractor.GetOldestInteractableSelected();
         Ammo = objectInSocet.transform.gameObject.GetComponent<Ammo>();
-        // Ammo = _ammoInMagazine.AmmoInMagazine;
     }
 
 
     public void DropMagazine()
     {
         Ammo = null;
-       // Ammo = 0;
     }
 }

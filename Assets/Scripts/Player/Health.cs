@@ -1,10 +1,10 @@
 using Fusion;
+using UnityEngine;
 
 public class Health : NetworkBehaviour
 {
-    public NetworkObject DeletedObject;
-    [Networked]
-    public float NetworkedHealth { get; set; } = 100;
+    [SerializeField] private NetworkPosition _networkPosition;
+    [Networked] public float NetworkedHealth { get; set; } = 100;
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void DealDamageRpc(float damage)
@@ -12,7 +12,7 @@ public class Health : NetworkBehaviour
         NetworkedHealth -= damage;
         if (NetworkedHealth <= 0)
         {
-            Runner.Despawn(DeletedObject);
+            _networkPosition.HardwareRig.RespawnTeleport();
         }
     }
 }

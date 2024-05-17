@@ -3,37 +3,35 @@ using UnityEngine;
 
 public class NetworkPosition : NetworkBehaviour
 {
-     public HardwareRig hardwareRig;
-    //[HideInInspector]
-
-    [SerializeField]
-    private GameObject _characterModel;
-    //[SerializeField]
-    //private GameObject _self;
-
-
-    // As we are in shared topology, having the StateAuthority means we are the local user
+    public HardwareRig HardwareRig;
+    public PlayerUIController PlayerUIController;
+    [SerializeField] private GameObject _characterModel;
+    [SerializeField] private WeaponController _weaponController;
+    [SerializeField] private Health _health;
     public virtual bool IsLocalNetworkRig => Object && Object.HasStateAuthority;
 
     public override void Spawned()
     {
         if (IsLocalNetworkRig)
         {
-            hardwareRig = FindObjectOfType<HardwareRig>();
-            if (hardwareRig == null) Debug.LogError("Missing HardwareRig in the scene");
+            HardwareRig = FindObjectOfType<HardwareRig>();
+            PlayerUIController = FindObjectOfType<PlayerUIController>();
+            if (HardwareRig == null) Debug.LogError("Missing HardwareRig in the scene");
             _characterModel.SetActive(false);
+            if (PlayerUIController == null) Debug.LogError("Missing PlayerUIController in the scene");
+            {
+                PlayerUIController._weaponController = _weaponController;
+                PlayerUIController._health = _health;
+            }
         }
     }
 
     public override void FixedUpdateNetwork()
     {
-        //Update the rig at each network tick for local player. The NetworkTransform will forward this to other players
-        if (IsLocalNetworkRig && hardwareRig)
-            {
-                //RigState rigState = hardwareRig.RigState;
-                ApplyLocalStateToRigParts(hardwareRig.GetTransform());
-                //ApplyLocalStateToHandPoses(rigState);
-            }
+        if (IsLocalNetworkRig && HardwareRig)
+        {
+            ApplyLocalStateToRigParts(HardwareRig.GetTransform());
+        }
     }
 
     private void ApplyLocalStateToRigParts(Transform playerTransform)
@@ -48,10 +46,4 @@ public class NetworkPosition : NetworkBehaviour
         //headset.transform.position = rigState.headsetPosition;
         //headset.transform.rotation = rigState.headsetRotation;
     }
-    //protected virtual void ApplyLocalStateToHandPoses(RigState rigState)
-    //{
-    //    // we update the hand pose info. It will trigger on network hands OnHandCommandChange on all clients, and update the hand representation accordingly
-    //    leftHand.HandCommand = rigState.leftHandCommand;
-    //    rightHand.HandCommand = rigState.rightHandCommand;
-    //}
 }
