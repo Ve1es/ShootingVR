@@ -632,6 +632,7 @@ MonoBehaviour:
   _gunBarrel: {fileID: 2728669250179411613}
   destroyTimer: 2
   muzzleFlashPrefab: {fileID: 1782395880954752, guid: 3dd9cf2e209c504448f1c4c6835675cf, type: 3}
+  _networkPosition: {fileID: 0}
   Ammo: {fileID: 0}
   Damage: 10
 --- !u!95 &62424688276003859
@@ -806,7 +807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactable: {fileID: 6325201997181386725}
-  _moveSpeedInHand: 10
+  _moveSpeedInHand: 10000
   _currentPositionOnBelt: {fileID: 0}
 --- !u!114 &6910461812645855778
 MonoBehaviour:

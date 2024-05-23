@@ -7,12 +7,13 @@ public class Health : NetworkBehaviour
     [Networked] public float NetworkedHealth { get; set; } = 100;
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void DealDamageRpc(float damage)
+    public void DealDamageRpc(float damage, int playerID)
     {
         NetworkedHealth -= damage;
         if (NetworkedHealth <= 0)
         {
-            _networkPosition.HardwareRig.RespawnTeleport();
+            _networkPosition.HardwareRig.AddKill(playerID);
+            _networkPosition.HardwareRig.DeathBehaviour();
         }
     }
 }

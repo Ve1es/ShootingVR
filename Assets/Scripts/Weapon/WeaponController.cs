@@ -5,6 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class WeaponController : NetworkBehaviour
 {
     private const int Aim_Range = 10000;
+    private const int MinAmmo = 0;
+
     [SerializeField] private XRSocketInteractor _socketInteractor;
     [SerializeField] private XRSimpleInteractable _simpleInteractor;
     [SerializeField] private Animator _animator;
@@ -12,18 +14,21 @@ public class WeaponController : NetworkBehaviour
     [SerializeField] private Transform _gunBarrel;
     [SerializeField] private float destroyTimer = 2f;
     [SerializeField] private GameObject muzzleFlashPrefab;
+    [SerializeField] private NetworkPosition _networkPosition;
+
     public Ammo Ammo = null;
     public float Damage = 10;
+
     public void Shooting()
     {
-        if (HasStateAuthority == false || Ammo == null || Ammo.AmmoInMagazine <= 0) { return; }
+        if (HasStateAuthority == false || Ammo == null || Ammo.AmmoInMagazine <= MinAmmo) { return; }
         _animator.SetTrigger("Fire");
         Ray ray = new Ray(_gunBarrel.position, _gunBarrel.forward);
         if (Runner.GetPhysicsScene().Raycast(ray.origin, ray.direction, out var hit))
         {
             if (hit.transform.TryGetComponent<Health>(out var health))
             {
-                health.DealDamageRpc(Damage);
+                health.DealDamageRpc(Damage, Runner.LocalPlayer.PlayerId);
             }
         }
         Ammo.AmmoInMagazine --;
@@ -47,8 +52,6 @@ public class WeaponController : NetworkBehaviour
         IXRSelectInteractable objectInSocet = _socketInteractor.GetOldestInteractableSelected();
         Ammo = objectInSocet.transform.gameObject.GetComponent<Ammo>();
     }
-
-
     public void DropMagazine()
     {
         Ammo = null;

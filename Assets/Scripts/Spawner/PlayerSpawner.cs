@@ -1,32 +1,34 @@
 using Fusion;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
     [SerializeField] private Transform[] _startPoints;
+    [SerializeField] private Transform[] _waitingRoomsPoints;
     [SerializeField] private NetworkPrefabRef _playerNetworkPrefab = NetworkPrefabRef.Empty;
+
     public GameObject Player;
 
     private void SpawnPlayer(PlayerRef player)
     {
-        int index = player.PlayerId % _startPoints.Length;
-        Transform spawnPosition = _startPoints[index].transform;
+        int index = player.PlayerId % _waitingRoomsPoints.Length;
+        Transform spawnPosition = _waitingRoomsPoints[index].transform;
         var playerObject = Runner.Spawn(_playerNetworkPrefab, spawnPosition.position, Quaternion.identity, player);
         Runner.SetPlayerObject(player, playerObject);
-        Player.GetComponent<HardwareRig>().Teleport(spawnPosition);
+        StartCoroutine(CallAfterOneUpdate(spawnPosition, playerObject));
     }
 
     public void PlayerJoined(PlayerRef player)
     {
-        Debug.LogError(player);
         if (player == Runner.LocalPlayer)
         {
             SpawnPlayer(player); 
         }
     }
-
-    public void TeleportPlayerToSpawnPosition()
+    IEnumerator CallAfterOneUpdate(Transform spawnPosition, NetworkObject networkObject)
     {
-        Player.GetComponent<HardwareRig>().Teleport(_startPoints[Random.Range(0, _startPoints.Length)]);
+        yield return new WaitForEndOfFrame();
+        networkObject.GetComponent<NetworkPosition>().HardwareRig.Teleport(spawnPosition);
     }
 }

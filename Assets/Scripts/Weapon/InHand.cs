@@ -5,10 +5,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class InHand : NetworkBehaviour
 {
     private Transform _currentPosition;
+
     [SerializeField] private XRSimpleInteractable _interactable;
     [SerializeField] private float _moveSpeedInHand = 10;
     [SerializeField] private Transform _currentPositionOnBelt;
-    
+
     public override void Spawned()
     {
         _interactable = GetComponent<XRSimpleInteractable>();
@@ -34,5 +35,5 @@ public class InHand : NetworkBehaviour
     public void ReturnOnBelt()
     {
         _currentPosition = _currentPositionOnBelt;
-    }  
+    }
 }

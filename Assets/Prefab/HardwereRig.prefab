@@ -1368,7 +1368,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f8181b877e9f04aa0d850557060994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTransform: {fileID: 4011509580879870109}
+  _respawnTime: 0
+  _spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _deathRoom: {fileID: 0}
+  _endGameRoom: {fileID: 0}
+  _characterController: {fileID: 258167694400816670}
+  Head: {fileID: 0}
+  RightController: {fileID: 0}
+  LeftController: {fileID: 0}
+  NetworkPlayer: {fileID: 0}
+  NickName: 
+  DeathCanvas: {fileID: 0}
+  RoundData: {fileID: 0}
 --- !u!114 &7293976161922687082
 MonoBehaviour:
   m_ObjectHideFlags: 0
