@@ -7,6 +7,8 @@ public class WeaponController : NetworkBehaviour
     private const int Aim_Range = 10000;
     private const int MinAmmo = 0;
 
+    [SerializeField] private NetworkPrefabRef _bulletPrefab = NetworkPrefabRef.Empty;
+
     [SerializeField] private XRSocketInteractor _socketInteractor;
     [SerializeField] private XRSimpleInteractable _simpleInteractor;
     [SerializeField] private Animator _animator;
@@ -18,20 +20,22 @@ public class WeaponController : NetworkBehaviour
 
     public Ammo Ammo = null;
     public float Damage = 10;
+    public Transform SpawnBulletPoint;
 
     public void Shooting()
     {
         if (HasStateAuthority == false || Ammo == null || Ammo.AmmoInMagazine <= MinAmmo) { return; }
-        _animator.SetTrigger("Fire");
-        Ray ray = new Ray(_gunBarrel.position, _gunBarrel.forward);
-        if (Runner.GetPhysicsScene().Raycast(ray.origin, ray.direction, out var hit))
-        {
-            if (hit.transform.TryGetComponent<Health>(out var health))
-            {
-                health.DealDamageRpc(Damage, Runner.LocalPlayer.PlayerId);
-            }
-        }
-        Ammo.AmmoInMagazine --;
+        //_animator.SetTrigger("Fire");
+        //Ray ray = new Ray(_gunBarrel.position, _gunBarrel.forward);
+        //if (Runner.GetPhysicsScene().Raycast(ray.origin, ray.direction, out var hit))
+        //{
+        //    if (hit.transform.TryGetComponent<Health>(out var health))
+        //    {
+        //        health.DealDamageRpc(Damage, Runner.LocalPlayer.PlayerId);
+        //    }
+        //}
+        CreateBullet();
+        Ammo.AmmoInMagazine--;
         if (muzzleFlashPrefab)
         {
             GameObject tempFlash;
@@ -42,10 +46,22 @@ public class WeaponController : NetworkBehaviour
     }
     public void Update()
     {
-        if (HasStateAuthority == false) return;
-        _lineRenderer.SetPosition(0, _gunBarrel.position);
-        Vector3 newPosition = _gunBarrel.position + transform.forward * Aim_Range;
-        _lineRenderer.SetPosition(1, newPosition);
+        //if (HasStateAuthority == false) return;
+        //_lineRenderer.SetPosition(0, _gunBarrel.position);
+        //Vector3 newPosition = _gunBarrel.position + transform.forward * Aim_Range;
+        //_lineRenderer.SetPosition(1, newPosition);
+    }
+    public void CreateBullet()
+    {
+        Runner.Spawn(_bulletPrefab,
+         SpawnBulletPoint.position,
+         SpawnBulletPoint.rotation,
+         Object.InputAuthority,
+         (runner, o) =>
+         {
+             o.GetComponent<Bullet>().Init();
+             o.GetComponent<DealDamage>().PlayerID = Runner.LocalPlayer.PlayerId;
+         });
     }
     public void Reload()
     {

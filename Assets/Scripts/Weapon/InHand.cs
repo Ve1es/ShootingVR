@@ -1,4 +1,5 @@
 using Fusion;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -27,7 +28,8 @@ public class InHand : NetworkBehaviour
         {
             if (!(Object.transform.position == _currentPosition.position && Object.transform.rotation == _currentPosition.rotation))
             {
-                Object.transform.position = Vector3.Lerp(transform.position, _currentPosition.position, Time.deltaTime * _moveSpeedInHand);
+               // Object.transform.position = Vector3.Lerp(transform.position, _currentPosition.position, Time.deltaTime * _moveSpeedInHand);
+                Object.transform.position = new Vector3(_currentPosition.position.x, _currentPosition.position.y, _currentPosition.position.z);
                 Object.transform.rotation = _currentPosition.rotation;
             }
         }
