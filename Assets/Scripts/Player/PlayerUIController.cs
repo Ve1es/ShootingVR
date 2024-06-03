@@ -4,13 +4,15 @@ using TMPro;
 public class PlayerUIController : MonoBehaviour
 {
     private XRIDefaultInputActions _inputActions;
-    private bool _showroundStatistics=false;
+    private bool _showroundLeftStatistics = false;
+    private bool _showroundRightStatistics = false;
 
     [SerializeField] private TMP_Text _hp;
     [SerializeField] private TMP_Text _ammo;
     [SerializeField] private TMP_Text _timer;
     [SerializeField] private TMP_Text _kills;
-    [SerializeField] private Canvas _roundStatistics;
+    [SerializeField] private Canvas _roundLeftStatistics;
+    [SerializeField] private Canvas _roundRightStatistics;
     [SerializeField] private NetworkRoundData _networkRoundData;
 
     public Health _health;
@@ -26,9 +28,18 @@ public class PlayerUIController : MonoBehaviour
     {
         PlayerStatisticUI();
         if (_inputActions.XRILeftHand.YButtonTouched.IsPressed())
-            _showroundStatistics = true;
+        { _showroundLeftStatistics = true; }
         else
-            _showroundStatistics = false;
+            _showroundLeftStatistics = false;
+
+        if (_inputActions.XRIRightHand.BButtonTouched.IsPressed())
+        {
+            _showroundRightStatistics = true;
+        }
+        else
+            _showroundRightStatistics = false;
+
+
         GameStatisticUI();
     }
     private void PlayerStatisticUI()
@@ -49,13 +60,22 @@ public class PlayerUIController : MonoBehaviour
     }
     private void GameStatisticUI()
     {
-        if (_showroundStatistics)
-        { 
-            _roundStatistics.gameObject.SetActive(true);
-            _timer.text = _networkRoundData.TimerName + _networkRoundData.Time.ToString();
-            _kills.text = "Килы: " + _networkRoundData.LocalPlayerKills.ToString();
+        if (_showroundLeftStatistics)
+        {
+            _roundLeftStatistics.gameObject.SetActive(true);
+            _roundLeftStatistics.GetComponent<RoundStatistic>().Timer.text = _networkRoundData.TimerName + _networkRoundData.Time.ToString();
+            _roundLeftStatistics.GetComponent<RoundStatistic>().Kills.text = "Килы: " + _networkRoundData.LocalPlayerKills.ToString();
         }
         else
-        { _roundStatistics.gameObject.SetActive(false); }
+        { _roundLeftStatistics.gameObject.SetActive(false); }
+
+        if (_showroundRightStatistics)
+        {
+            _roundRightStatistics.gameObject.SetActive(true);
+            _roundRightStatistics.GetComponent<RoundStatistic>().Timer.text = _networkRoundData.TimerName + _networkRoundData.Time.ToString();
+            _roundRightStatistics.GetComponent<RoundStatistic>().Kills.text = "Килы: " + _networkRoundData.LocalPlayerKills.ToString();
+        }
+        else
+        { _roundRightStatistics.gameObject.SetActive(false); }
     }
 }

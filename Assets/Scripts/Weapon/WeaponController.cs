@@ -25,15 +25,7 @@ public class WeaponController : NetworkBehaviour
     public void Shooting()
     {
         if (HasStateAuthority == false || Ammo == null || Ammo.AmmoInMagazine <= MinAmmo) { return; }
-        //_animator.SetTrigger("Fire");
-        //Ray ray = new Ray(_gunBarrel.position, _gunBarrel.forward);
-        //if (Runner.GetPhysicsScene().Raycast(ray.origin, ray.direction, out var hit))
-        //{
-        //    if (hit.transform.TryGetComponent<Health>(out var health))
-        //    {
-        //        health.DealDamageRpc(Damage, Runner.LocalPlayer.PlayerId);
-        //    }
-        //}
+        _animator.SetTrigger("Fire");
         CreateBullet();
         Ammo.AmmoInMagazine--;
         if (muzzleFlashPrefab)
@@ -43,13 +35,6 @@ public class WeaponController : NetworkBehaviour
             Destroy(tempFlash, destroyTimer);
         }
 
-    }
-    public void Update()
-    {
-        //if (HasStateAuthority == false) return;
-        //_lineRenderer.SetPosition(0, _gunBarrel.position);
-        //Vector3 newPosition = _gunBarrel.position + transform.forward * Aim_Range;
-        //_lineRenderer.SetPosition(1, newPosition);
     }
     public void CreateBullet()
     {

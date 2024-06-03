@@ -10,11 +10,14 @@ public class DealDamage : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogError("OnTriggerEnter Соприкосновение с объектом: " + other.gameObject.name);
+       
         if (other.TryGetComponent(out Health health))
         {
             health.DealDamageRpc(_damage, PlayerID);
         }
-        Runner.Despawn(Object);
+        if (!other.TryGetComponent(out PlayerController player) && !other.TryGetComponent(out WeaponController weapon))
+        {
+            Runner.Despawn(Object);
+        }
     }
 }

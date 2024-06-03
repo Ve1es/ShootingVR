@@ -59,11 +59,12 @@ public class NetworkPosition : NetworkBehaviour
     private void ApplyLocalStateToRigParts()
     {
         transform.position = HardwareRig.Head.transform.position+ _offset;
-        transform.rotation = HardwareRig.transform.rotation;
+        transform.rotation = new Quaternion(0, HardwareRig.Head.transform.rotation.y, 0, HardwareRig.Head.transform.rotation.w);
+
         _leftHand.transform.position = HardwareRig.LeftController.transform.position;
         _leftHand.transform.rotation = HardwareRig.LeftController.transform.rotation;
         _rightHand.transform.position = HardwareRig.RightController.transform.position;
         _rightHand.transform.rotation = HardwareRig.RightController.transform.rotation;
-        _head.transform.eulerAngles = new Vector3(_head.transform.eulerAngles.x, HardwareRig.Head.transform.eulerAngles.y, _head.transform.eulerAngles.z);
+        //_head.transform.eulerAngles = new Vector3(_head.transform.eulerAngles.x, HardwareRig.Head.transform.eulerAngles.y, _head.transform.eulerAngles.z);
     }  
 }

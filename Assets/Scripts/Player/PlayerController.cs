@@ -89,11 +89,11 @@ public class PlayerController : MonoBehaviour
         NetworkPlayer.SetActive(false);
         _characterController.enabled = true;
     }
-    public void DeathBehaviour()
+    public void DeathBehaviour(Health healt)
     {
-        StartCoroutine(DelayedAction());
+        StartCoroutine(DelayedAction(healt));
     }
-    IEnumerator DelayedAction()
+    IEnumerator DelayedAction(Health healt)
     {
         DeathCanvas.gameObject.SetActive(true);
         Teleport(_deathRoom);
@@ -103,6 +103,8 @@ public class PlayerController : MonoBehaviour
         RightController.SetActive(true);
         LeftController.SetActive(true);
         DeathCanvas.gameObject.SetActive(false);
+        healt.AddHPRpc();
         RespawnTeleport();
+
     }
 }

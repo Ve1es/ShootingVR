@@ -13,7 +13,12 @@ public class Health : NetworkBehaviour
         if (NetworkedHealth <= 0)
         {
             _networkPosition.HardwareRig.AddKill(playerID);
-            _networkPosition.HardwareRig.DeathBehaviour();
+            _networkPosition.HardwareRig.DeathBehaviour(this);
         }
+    }
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void AddHPRpc()
+    {
+        NetworkedHealth = 100;
     }
 }
