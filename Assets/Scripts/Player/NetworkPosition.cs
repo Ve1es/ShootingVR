@@ -19,6 +19,10 @@ public class NetworkPosition : NetworkBehaviour
     public virtual bool IsLocalNetworkRig => Object && Object.HasStateAuthority;
     public PlayerController HardwareRig;
     public PlayerUIController PlayerUIController;
+    public Vector3 LeftHand;
+    public Vector3 RightHand;
+    public Quaternion LeftHandQ;
+    public Quaternion RightHandQ;
 
     public override void Spawned()
     {
@@ -29,12 +33,13 @@ public class NetworkPosition : NetworkBehaviour
             if (HardwareRig == null) Debug.LogError("Missing HardwareRig in the scene");
             if (PlayerUIController == null) Debug.LogError("Missing PlayerUIController in the scene");
             {
-                PlayerUIController._weaponController = _weaponController;
-                PlayerUIController._health = _health;
+                PlayerUIController.WeaponController = _weaponController;
+                PlayerUIController.Health = _health;
             }
             HardwareRig.RoundData.PlayerID = Object.StateAuthority.PlayerId;
             HardwareRig.NetworkPlayer = gameObject;
             PlayerName = HardwareRig.NickName;
+            
         }
     }
     public void DrawNickName()
@@ -46,14 +51,14 @@ public class NetworkPosition : NetworkBehaviour
     {
         GameObject nickName = Instantiate(_nickname, _nicknamePosition.position, Quaternion.identity);
         nickName.GetComponent<Nickname>().SetNickname(PlayerName);
-        nickName.GetComponent<Nickname>()._playerParent = gameObject.transform;
+        nickName.GetComponent<Nickname>().PlayerParent = gameObject.transform;
     }
     public override void FixedUpdateNetwork()
     {
         if (IsLocalNetworkRig && HardwareRig)
         {
             ApplyLocalStateToRigParts();
-        }
+        } 
     }
 
     private void ApplyLocalStateToRigParts()
@@ -61,10 +66,13 @@ public class NetworkPosition : NetworkBehaviour
         transform.position = HardwareRig.Head.transform.position+ _offset;
         transform.rotation = new Quaternion(0, HardwareRig.Head.transform.rotation.y, 0, HardwareRig.Head.transform.rotation.w);
 
-        _leftHand.transform.position = HardwareRig.LeftController.transform.position;
-        _leftHand.transform.rotation = HardwareRig.LeftController.transform.rotation;
-        _rightHand.transform.position = HardwareRig.RightController.transform.position;
-        _rightHand.transform.rotation = HardwareRig.RightController.transform.rotation;
-        //_head.transform.eulerAngles = new Vector3(_head.transform.eulerAngles.x, HardwareRig.Head.transform.eulerAngles.y, _head.transform.eulerAngles.z);
-    }  
+        _leftHand.transform.position = HardwareRig.LC;
+        _leftHand.transform.rotation = HardwareRig.LCQ;
+        _rightHand.transform.position = HardwareRig.RC;
+        _rightHand.transform.rotation = HardwareRig.RCQ;
+    }
+    public void DespawnPlayer()
+    {
+        Runner.Shutdown();
+    }
 }

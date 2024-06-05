@@ -32,5 +32,4 @@ public class Bullet : NetworkBehaviour
             _distanceTravelled = Vector3.Distance(_initialPosition, transform.position);
         }
     }
-
 }

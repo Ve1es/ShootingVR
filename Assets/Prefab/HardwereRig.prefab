@@ -1381,6 +1381,8 @@ MonoBehaviour:
   _deathRoom: {fileID: 0}
   _endGameRoom: {fileID: 0}
   _characterController: {fileID: 258167694400816670}
+  _leftLineController: {fileID: 0}
+  _rightLineController: {fileID: 0}
   Head: {fileID: 0}
   RightController: {fileID: 0}
   LeftController: {fileID: 0}
@@ -1388,6 +1390,10 @@ MonoBehaviour:
   DeathCanvas: {fileID: 0}
   RoundData: {fileID: 0}
   NickName: 
+  RC: {x: 0, y: 0, z: 0}
+  LC: {x: 0, y: 0, z: 0}
+  RCQ: {x: 0, y: 0, z: 0, w: 0}
+  LCQ: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &7293976161922687082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1402,8 +1408,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hp: {fileID: 2221299383235626989}
   _ammo: {fileID: 6190031755219959877}
-  _timer: {fileID: 2582888683080197540}
-  _kills: {fileID: 7021877521459185550}
   _roundLeftStatistics: {fileID: 0}
   _roundRightStatistics: {fileID: 0}
   _networkRoundData: {fileID: 0}

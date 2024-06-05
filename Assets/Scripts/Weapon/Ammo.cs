@@ -1,6 +1,6 @@
-using UnityEngine;
+using Fusion;
 
-public class Ammo : MonoBehaviour
+public class Ammo : NetworkBehaviour
 {
     public int AmmoInMagazine = 10;
 }

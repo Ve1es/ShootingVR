@@ -139,9 +139,9 @@ public class GameControll : NetworkBehaviour, IPlayerLeft
 
         }
         string output = "";
-        foreach (var kvp in _roundData.playerKills)
+        foreach (var kvp in _roundData.PlayerKills)
         {
-            output += $"{_roundData.playerNiks[kvp.Key]}: {kvp.Value} килов\n";
+            output += $"{_roundData.PlayerNiks[kvp.Key]}: {kvp.Value} килов\n";
         }
         _result.text = output;
         _roundData.IsEndGame = true;
@@ -156,8 +156,8 @@ public class GameControll : NetworkBehaviour, IPlayerLeft
     }
     public int FindMaxValueKey()
     {
-        int maxValue = _roundData.playerKills.Values.Max();
-        var maxKeys = _roundData.playerKills.Where(pair => pair.Value == maxValue).Select(pair => pair.Key).ToList();
+        int maxValue = _roundData.PlayerKills.Values.Max();
+        var maxKeys = _roundData.PlayerKills.Where(pair => pair.Value == maxValue).Select(pair => pair.Key).ToList();
 
         if (maxKeys.Count == OnePlayerWin)
         {

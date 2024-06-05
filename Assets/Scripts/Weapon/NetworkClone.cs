@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class NetworkClone : NetworkBehaviour
 {
-    public GameObject Parent;
     [SerializeField] private MeshRenderer[] _model;
+    public GameObject Parent;
     public override void Spawned()
     {
         if (Object.HasStateAuthority)
@@ -16,7 +16,7 @@ public class NetworkClone : NetworkBehaviour
     }
     public override void FixedUpdateNetwork()
     {
-       Object.transform.position = Parent.transform.position;
+        Object.transform.position = Parent.transform.position;
         Object.transform.rotation = Parent.transform.rotation;
     }
 }

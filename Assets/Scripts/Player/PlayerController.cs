@@ -1,3 +1,4 @@
+
 using System.Collections;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _deathRoom;
     [SerializeField] private Transform _endGameRoom;
     [SerializeField] private CharacterController _characterController;
+    [SerializeField] private GameObject _leftLineController;
+    [SerializeField] private GameObject _rightLineController;
 
     public Camera Head;
     public GameObject RightController;
@@ -22,6 +25,10 @@ public class PlayerController : MonoBehaviour
     public GameObject NetworkPlayer;
     public Canvas DeathCanvas;
     public NetworkRoundData RoundData;
+    public Vector3 RC;
+    public Vector3 LC;
+    public Quaternion RCQ;
+    public Quaternion LCQ;
     public string NickName;
 
     public Transform GetTransform() { return gameObject.transform; }
@@ -29,9 +36,15 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _currentRespawnTime = _respawnTime;
+        RC = RightController.transform.position;
+        LC = LeftController.transform.position;
     }
     public void Update()
     {
+        RC = RightController.transform.position;
+        LC = LeftController.transform.position;
+        RCQ = RightController.transform.rotation;
+        LCQ = LeftController.transform.rotation;
         if (_isTeleportedPlayer && RoundData.IsStartGame)
         {
             RespawnTeleport(RoundData.PlayerID);
@@ -43,6 +56,10 @@ public class PlayerController : MonoBehaviour
         {
             TeleportInEndGameRoom();
             _inEndRoom = true;
+            if(RoundData.PlayerID>1)
+            {
+                NetworkPlayer.GetComponent<NetworkPosition>().DespawnPlayer();
+            }
         }
         if (RoundData.Time < _currentRespawnTime)
         {
@@ -65,6 +82,8 @@ public class PlayerController : MonoBehaviour
     }
     public void Teleport(Transform spawnPoint)
     {
+        _leftLineController.SetActive(false);
+        _rightLineController.SetActive(false);
         _characterController.enabled = false;
         gameObject.transform.position = spawnPoint.position;
         _characterController.enabled = true;
@@ -81,9 +100,11 @@ public class PlayerController : MonoBehaviour
         gameObject.transform.position = _spawnPoints[playerId].position;
         _characterController.enabled = true;
     }
-
     public void TeleportInEndGameRoom()
     {
+        RoundData.InNetwork = false;
+        _leftLineController.SetActive(true);
+        _rightLineController.SetActive(true);
         _characterController.enabled = false;
         gameObject.transform.position = _endGameRoom.position;
         NetworkPlayer.SetActive(false);
@@ -105,6 +126,5 @@ public class PlayerController : MonoBehaviour
         DeathCanvas.gameObject.SetActive(false);
         healt.AddHPRpc();
         RespawnTeleport();
-
     }
 }

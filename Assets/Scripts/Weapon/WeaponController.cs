@@ -1,14 +1,15 @@
 using Fusion;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class WeaponController : NetworkBehaviour
 {
-    private const int Aim_Range = 10000;
     private const int MinAmmo = 0;
 
-    [SerializeField] private NetworkPrefabRef _bulletPrefab = NetworkPrefabRef.Empty;
+    private XRIDefaultInputActions _inputActions;
 
+    [SerializeField] private NetworkPrefabRef _bulletPrefab = NetworkPrefabRef.Empty;
     [SerializeField] private XRSocketInteractor _socketInteractor;
     [SerializeField] private XRSimpleInteractable _simpleInteractor;
     [SerializeField] private Animator _animator;
@@ -25,8 +26,8 @@ public class WeaponController : NetworkBehaviour
     public void Shooting()
     {
         if (HasStateAuthority == false || Ammo == null || Ammo.AmmoInMagazine <= MinAmmo) { return; }
-        _animator.SetTrigger("Fire");
         CreateBullet();
+        _animator.SetTrigger("Fire");
         Ammo.AmmoInMagazine--;
         if (muzzleFlashPrefab)
         {
@@ -34,7 +35,6 @@ public class WeaponController : NetworkBehaviour
             tempFlash = Instantiate(muzzleFlashPrefab, _gunBarrel.position, _gunBarrel.rotation);
             Destroy(tempFlash, destroyTimer);
         }
-
     }
     public void CreateBullet()
     {
@@ -56,5 +56,38 @@ public class WeaponController : NetworkBehaviour
     public void DropMagazine()
     {
         Ammo = null;
+    }
+    public void Drop(InputAction.CallbackContext context)
+    {
+        if (gameObject.GetComponent<InHand>().RightHandBool&& gameObject.GetComponent<InHand>().InHandBool)
+        {
+            if (context.action == _inputActions.XRIRightHand.AButton)
+            { Ammo.gameObject.GetComponent<XRGrabInteractable>().enabled = false; }
+        }
+        else
+        {
+            if (context.action == _inputActions.XRILeftHand.XButton)
+            { Ammo.gameObject.GetComponent<XRGrabInteractable>().enabled = false; }
+        }
+    }
+
+
+    private void Awake()
+    {
+        _inputActions = new XRIDefaultInputActions();
+    }
+
+    private void OnEnable()
+    {
+        _inputActions.Enable();
+        _inputActions.XRILeftHand.XButton.performed  += Drop;
+        _inputActions.XRIRightHand.AButton.performed += Drop;
+    }
+
+    private void OnDisable()
+    {
+        _inputActions.XRILeftHand.XButton.performed -= Drop;
+        _inputActions.XRIRightHand.AButton.performed -= Drop;
+        _inputActions.Disable();
     }
 }

@@ -14,13 +14,15 @@ public class NetworkRoundData : NetworkBehaviour
     public int PlayerID;
     public int LocalPlayerKills = 0;
     public string LocalPlayerNick;
-    public Dictionary<int, int> playerKills = new Dictionary<int, int>();
-    public Dictionary<int, string> playerNiks = new Dictionary<int, string>();
+    public bool InNetwork = false;
+    public Dictionary<int, int> PlayerKills = new Dictionary<int, int>();
+    public Dictionary<int, string> PlayerNiks = new Dictionary<int, string>();
     
 
     public override void Spawned()
     {
         IsStartGame = false;
+        InNetwork = true;
     }
    
     public void StartGame()
@@ -51,13 +53,13 @@ public class NetworkRoundData : NetworkBehaviour
     [Rpc]
     private void Rpc_UpdatePlayerName(int playerID, string playerName)
     {
-        if (!playerKills.ContainsKey(playerID))
+        if (!PlayerKills.ContainsKey(playerID))
         {
-            playerKills[playerID] = KillsAmountBeforeKill;
+            PlayerKills[playerID] = KillsAmountBeforeKill;
         }
-        if (!playerNiks.ContainsKey(playerID))
+        if (!PlayerNiks.ContainsKey(playerID))
         {
-            playerNiks[playerID] = playerName;
+            PlayerNiks[playerID] = playerName;
         }
     }
     public void AddKill(int player)
@@ -67,18 +69,18 @@ public class NetworkRoundData : NetworkBehaviour
     [Rpc]
     private void Rpc_UpdateKillCount(int playerID)
     {
-        if (playerKills.ContainsKey(playerID))
+        if (PlayerKills.ContainsKey(playerID))
         {
-            playerKills[playerID]++;
+            PlayerKills[playerID]++;
             
         }
         else
         {
-            playerKills[playerID] = KillsAmountAfterOneKill;
+            PlayerKills[playerID] = KillsAmountAfterOneKill;
         }
         if (PlayerID == playerID)
         {
             LocalPlayerKills++;
         }
-    }
+    }  
 }

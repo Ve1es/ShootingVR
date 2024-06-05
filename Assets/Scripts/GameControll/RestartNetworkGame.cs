@@ -1,10 +1,11 @@
 using UnityEngine.SceneManagement;
-using UnityEngine;
+using Fusion;
 
-public class RestartGame : MonoBehaviour
+public class RestartNetworkGame : NetworkBehaviour
 {
     public void Restart()
     {
+        Runner.Shutdown();
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
