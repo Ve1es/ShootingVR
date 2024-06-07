@@ -1,6 +1,6 @@
-
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,7 +38,9 @@ public class PlayerController : MonoBehaviour
         _currentRespawnTime = _respawnTime;
         RC = RightController.transform.position;
         LC = LeftController.transform.position;
+
     }
+
     public void Update()
     {
         RC = RightController.transform.position;
@@ -127,4 +129,5 @@ public class PlayerController : MonoBehaviour
         healt.AddHPRpc();
         RespawnTeleport();
     }
+
 }

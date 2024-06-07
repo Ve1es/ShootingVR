@@ -1389,11 +1389,11 @@ MonoBehaviour:
   NetworkPlayer: {fileID: 0}
   DeathCanvas: {fileID: 0}
   RoundData: {fileID: 0}
-  NickName: 
   RC: {x: 0, y: 0, z: 0}
   LC: {x: 0, y: 0, z: 0}
   RCQ: {x: 0, y: 0, z: 0, w: 0}
   LCQ: {x: 0, y: 0, z: 0, w: 0}
+  NickName: 
 --- !u!114 &7293976161922687082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1411,8 +1411,8 @@ MonoBehaviour:
   _roundLeftStatistics: {fileID: 0}
   _roundRightStatistics: {fileID: 0}
   _networkRoundData: {fileID: 0}
-  _health: {fileID: 0}
-  _weaponController: {fileID: 0}
+  Health: {fileID: 0}
+  WeaponController: {fileID: 0}
 --- !u!114 &8090663115842517677
 MonoBehaviour:
   m_ObjectHideFlags: 0

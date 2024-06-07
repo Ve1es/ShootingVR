@@ -2101,15 +2101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4ac842602b9a2045ac20e9eb5e69e8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runner: {fileID: 0}
-  _object: {fileID: 0}
-  InvokeRpc: 0
-  ObjectIndex: 0
-  WordOffset: 0
-  WordCount: 0
-  DefaultReplicated: 1
-  _damage: 100
-  PlayerID: 0
 --- !u!114 &148212701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3534,7 +3525,7 @@ GameObject:
   - component: {fileID: 316704636}
   - component: {fileID: 316704638}
   - component: {fileID: 316704637}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4323,7 +4314,7 @@ GameObject:
   - component: {fileID: 369824121}
   - component: {fileID: 369824120}
   - component: {fileID: 369824119}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: RaundInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6244,7 +6235,7 @@ GameObject:
   - component: {fileID: 541249766}
   - component: {fileID: 541249770}
   - component: {fileID: 541249771}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Right Controller (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6285,7 +6276,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 33
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -7017,10 +7008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef1468434bf255448a98519ed6c207a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputField: {fileID: 0}
-  NNK: {fileID: 537900908}
-  AnotherInputField: {fileID: 0}
-  Hear: 0
 --- !u!1001 &561256777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7106,6 +7093,30 @@ PrefabInstance:
     - target: {fileID: 146120, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 148190, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400182, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11429994, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11451576, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11457018, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11487846, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22458684, guid: c4e389e44d96da64ea974ab237ce1a9a, type: 3}
       propertyPath: m_Pivot.x
@@ -7300,7 +7311,7 @@ GameObject:
   - component: {fileID: 625160358}
   - component: {fileID: 625160360}
   - component: {fileID: 625160359}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7622,6 +7633,7 @@ GameObject:
   - component: {fileID: 682482563}
   - component: {fileID: 682482562}
   - component: {fileID: 682482566}
+  - component: {fileID: 682482567}
   m_Layer: 0
   m_Name: NickNameInputField
   m_TagString: Untagged
@@ -7835,6 +7847,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c09aa7dfd5f5c54e85bf0c06b0a261c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputField: {fileID: 682482562}
+  NNK: {fileID: 537900908}
+  hear: 0
+--- !u!114 &682482567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682482560}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a08870860b41863439634e7b35745de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputField: {fileID: 682482562}
 --- !u!1 &689093919
 GameObject:
   m_ObjectHideFlags: 0
@@ -10421,7 +10449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnDelay: 30
-  _roundDelay: 300
+  _roundDelay: 150
   _roundData: {fileID: 895838455}
   _result: {fileID: 1498182456}
   _teamWin: {fileID: 698270212}
@@ -11387,7 +11415,7 @@ GameObject:
   - component: {fileID: 1038808710}
   - component: {fileID: 1038808709}
   - component: {fileID: 1038808708}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: InGameParameters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11593,7 +11621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1069007706}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11945,7 +11973,7 @@ GameObject:
   - component: {fileID: 1095140005}
   - component: {fileID: 1095140007}
   - component: {fileID: 1095140006}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12465,7 +12493,7 @@ GameObject:
   - component: {fileID: 1163609638}
   - component: {fileID: 1163609640}
   - component: {fileID: 1163609639}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13079,7 +13107,7 @@ GameObject:
   - component: {fileID: 1219105664}
   - component: {fileID: 1219105663}
   - component: {fileID: 1219105662}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: RaundInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13196,7 +13224,7 @@ GameObject:
   - component: {fileID: 1219176567}
   - component: {fileID: 1219176569}
   - component: {fileID: 1219176568}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13280,7 +13308,7 @@ GameObject:
   - component: {fileID: 1221333050}
   - component: {fileID: 1221333052}
   - component: {fileID: 1221333051}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13365,7 +13393,7 @@ GameObject:
   - component: {fileID: 1225977240}
   - component: {fileID: 1225977242}
   - component: {fileID: 1225977241}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13513,7 +13541,7 @@ Transform:
   m_GameObject: {fileID: 1228559791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.75, y: 2, z: -1.61}
+  m_LocalPosition: {x: 1.75, y: 0, z: -1.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14020,7 +14048,7 @@ Transform:
   m_GameObject: {fileID: 1303088981}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.52, y: 2, z: -1.8800001}
+  m_LocalPosition: {x: 1.52, y: 0, z: -1.8800001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16686,7 +16714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1577159941}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17407,7 +17435,7 @@ GameObject:
   - component: {fileID: 1660635259}
   - component: {fileID: 1660635263}
   - component: {fileID: 1660635264}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Left Controller (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17448,7 +17476,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 4294967295
+    m_Bits: 33
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -17956,7 +17984,7 @@ GameObject:
   - component: {fileID: 1667404084}
   - component: {fileID: 1667404086}
   - component: {fileID: 1667404085}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19807,7 +19835,7 @@ GameObject:
   - component: {fileID: 1846340897}
   - component: {fileID: 1846340899}
   - component: {fileID: 1846340898}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22719,7 +22747,7 @@ GameObject:
   - component: {fileID: 2119776676}
   - component: {fileID: 2119776678}
   - component: {fileID: 2119776677}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22860,7 +22888,7 @@ GameObject:
   - component: {fileID: 2146795536}
   - component: {fileID: 2146795538}
   - component: {fileID: 2146795537}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Kills
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22993,7 +23021,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 258167694400816670, guid: 4a5302acc513e2c4f932ea036ee8fe7c, type: 3}
       propertyPath: m_Radius
-      value: 0.1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 575432132535071709, guid: 4a5302acc513e2c4f932ea036ee8fe7c, type: 3}
       propertyPath: m_IsActive

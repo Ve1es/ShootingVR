@@ -15,8 +15,9 @@ public class DealDamage : NetworkBehaviour
         {
             health.DealDamageRpc(_damage, PlayerID);
         }
-        if (!other.TryGetComponent(out PlayerController player) && !other.TryGetComponent(out WeaponController weapon))
+        if (!other.TryGetComponent(out PlayerController player) && !other.TryGetComponent(out WeaponController weapon) && !other.TryGetComponent(out Bullet bullet))
         {
+            Debug.LogError(other.name);
             Runner.Despawn(Object);
         }
     }

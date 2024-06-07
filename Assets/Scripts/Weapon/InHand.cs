@@ -16,6 +16,8 @@ public class InHand : NetworkBehaviour
     [SerializeField] private MeshRenderer[] _model;
 
     [Networked] public bool RightHandBool { get; set; }
+    [Networked] public bool LeftHandBool { get; set; }
+
     public bool InHandBool = false;
     public GameObject TestObject;
 
@@ -32,26 +34,26 @@ public class InHand : NetworkBehaviour
     }
     public void OnSelectEnter(SelectEnterEventArgs interactor)
     {
-        InHandBool = true;
-        TestObject = interactor.interactorObject.transform.gameObject;
-        if (Object.HasStateAuthority)
+        if (!InHandBool)
         {
-            if (TestObject.GetComponent<RightHand>())
+            InHandBool = true;
+            TestObject = interactor.interactorObject.transform.gameObject;
+            if (Object.HasStateAuthority)
             {
-                RightHandBool = true;
-            }
-            else
-            {
-                RightHandBool = false;
+                if (TestObject.GetComponent<RightHand>())
+                {
+                    Debug.LogError("Right");
+                    RightHandBool = true;
+                    LeftHandBool = false;
+                }
+                if (TestObject.GetComponent<LeftHand>())
+                {
+                    Debug.LogError("Left");
+                    LeftHandBool = true;
+                    RightHandBool = false;
+                }
             }
         }
-        //if (!Object.HasStateAuthority)
-        //{
-        //    if (_rightHandBool)
-        //        _clone.Parent = _rightHand;
-        //    else
-        //        _clone.Parent = _leftHand;
-        //}
     }
     public override void FixedUpdateNetwork()
     {
@@ -66,7 +68,6 @@ public class InHand : NetworkBehaviour
     public void ReturnOnBelt()
     {
         InHandBool = false;
-       // transform.parent = _parent;
         _currentPosition = _currentPositionOnBelt;
         Object.transform.position = _currentPosition.position;
         Object.transform.rotation = _currentPosition.rotation;

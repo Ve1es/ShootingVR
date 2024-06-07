@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Health : NetworkBehaviour
 {
+    private const float MaxHP=100;
     [SerializeField] private NetworkPosition _networkPosition;
     [Networked] public float NetworkedHealth { get; set; } = 100;
 
@@ -22,6 +23,6 @@ public class Health : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void AddHPRpc()
     {
-        NetworkedHealth = 100;
+        NetworkedHealth = MaxHP;
     }
 }

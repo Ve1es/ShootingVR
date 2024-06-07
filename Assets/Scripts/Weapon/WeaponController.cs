@@ -1,4 +1,5 @@
 using Fusion;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -8,6 +9,7 @@ public class WeaponController : NetworkBehaviour
     private const int MinAmmo = 0;
 
     private XRIDefaultInputActions _inputActions;
+    private bool _canShoot = true;
 
     [SerializeField] private NetworkPrefabRef _bulletPrefab = NetworkPrefabRef.Empty;
     [SerializeField] private XRSocketInteractor _socketInteractor;
@@ -18,23 +20,47 @@ public class WeaponController : NetworkBehaviour
     [SerializeField] private float destroyTimer = 2f;
     [SerializeField] private GameObject muzzleFlashPrefab;
     [SerializeField] private NetworkPosition _networkPosition;
+    [SerializeField] private float _delay = 0.5f;
 
     public Ammo Ammo = null;
     public float Damage = 10;
     public Transform SpawnBulletPoint;
 
-    public void Shooting()
+    public void Shooting(ActivateEventArgs args)
     {
+        if (!CheckHand(args)) { return; }
         if (HasStateAuthority == false || Ammo == null || Ammo.AmmoInMagazine <= MinAmmo) { return; }
-        CreateBullet();
-        _animator.SetTrigger("Fire");
-        Ammo.AmmoInMagazine--;
-        if (muzzleFlashPrefab)
+        if (_canShoot)
         {
-            GameObject tempFlash;
-            tempFlash = Instantiate(muzzleFlashPrefab, _gunBarrel.position, _gunBarrel.rotation);
-            Destroy(tempFlash, destroyTimer);
+            _canShoot = false;
+            CreateBullet();
+            StartCoroutine(DelayCoroutine());
+            _animator.SetTrigger("Fire");
+            Ammo.AmmoInMagazine--;
+            if (muzzleFlashPrefab)
+            {
+                GameObject tempFlash;
+                tempFlash = Instantiate(muzzleFlashPrefab, _gunBarrel.position, _gunBarrel.rotation);
+                Destroy(tempFlash, destroyTimer);
+            }
         }
+    }
+    private bool CheckHand(ActivateEventArgs args)
+    {
+        if(args.interactorObject.transform.gameObject.GetComponent<RightHand>()&& gameObject.GetComponent<InHand>().RightHandBool)
+        {
+            return true;
+        }
+        if (args.interactorObject.transform.gameObject.GetComponent<LeftHand>() && gameObject.GetComponent<InHand>().LeftHandBool)
+        {
+            return true;
+        }
+        return false;
+    }
+    IEnumerator DelayCoroutine()
+    {
+      yield return new WaitForSeconds(_delay);
+        _canShoot = true;
     }
     public void CreateBullet()
     {
@@ -52,6 +78,7 @@ public class WeaponController : NetworkBehaviour
     {
         IXRSelectInteractable objectInSocet = _socketInteractor.GetOldestInteractableSelected();
         Ammo = objectInSocet.transform.gameObject.GetComponent<Ammo>();
+        objectInSocet.transform.gameObject.GetComponent<Ammo>().DisableGrabLayer();
     }
     public void DropMagazine()
     {
@@ -64,7 +91,7 @@ public class WeaponController : NetworkBehaviour
             if (context.action == _inputActions.XRIRightHand.AButton)
             { Ammo.gameObject.GetComponent<XRGrabInteractable>().enabled = false; }
         }
-        else
+        if (gameObject.GetComponent<InHand>().LeftHandBool && gameObject.GetComponent<InHand>().InHandBool)
         {
             if (context.action == _inputActions.XRILeftHand.XButton)
             { Ammo.gameObject.GetComponent<XRGrabInteractable>().enabled = false; }

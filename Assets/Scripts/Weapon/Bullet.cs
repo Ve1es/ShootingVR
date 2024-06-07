@@ -5,7 +5,7 @@ public class Bullet : NetworkBehaviour
 {
     private const float Default_Flight_Distance = 100;
     private const float Start_Flight_Distance = 0;
-    private const float Default_Speed = 10;
+    private const float Default_Speed = 20;
 
     private Vector3 _flightDirection;
     private Vector3 _initialPosition;

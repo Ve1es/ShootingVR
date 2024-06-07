@@ -39,7 +39,6 @@ public class NetworkPosition : NetworkBehaviour
             HardwareRig.RoundData.PlayerID = Object.StateAuthority.PlayerId;
             HardwareRig.NetworkPlayer = gameObject;
             PlayerName = HardwareRig.NickName;
-            
         }
     }
     public void DrawNickName()
@@ -49,9 +48,12 @@ public class NetworkPosition : NetworkBehaviour
     [Rpc]
     public void RPC_SpawnNickName()
     {
+        if (!HasStateAuthority) { 
         GameObject nickName = Instantiate(_nickname, _nicknamePosition.position, Quaternion.identity);
         nickName.GetComponent<Nickname>().SetNickname(PlayerName);
         nickName.GetComponent<Nickname>().PlayerParent = gameObject.transform;
+            nickName.GetComponent<Nickname>().NicknamePosition = _nicknamePosition;
+        }
     }
     public override void FixedUpdateNetwork()
     {
